@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import {
   deletePersonDetailsAsync,
   getFilterDataAsync,
-  getSearchDataAsync,
 } from "../features/person/personSlice";
 import SeachBox from "../components/SeachBox";
 

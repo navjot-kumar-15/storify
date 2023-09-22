@@ -24,6 +24,7 @@ export const createPersonDetail = asyncHandler(async (req, res) => {
 export const getPersonDetails = asyncHandler(async (req, res) => {
   const { q } = req.query;
   const person = await Person.find({ user: req.user.id });
+
   res.send(person);
 });
 

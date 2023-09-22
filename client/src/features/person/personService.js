@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://localhost:8080/person";
+const URL = "https://storify-five.vercel.app/person";
 
 // Create
 export const createPersonDetail = async (value, token) => {

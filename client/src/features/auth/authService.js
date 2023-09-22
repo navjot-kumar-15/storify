@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://localhost:8080/auth";
+const URL = "https://storify-five.vercel.app/auth";
 
 export const registerUser = async (value) => {
   const { data } = await axios.post(`${URL}/register`, value);

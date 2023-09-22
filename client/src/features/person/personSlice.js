@@ -38,10 +38,10 @@ export const createPersonDetailsAsync = createAsyncThunk(
 // Get
 export const getPersonDetailsAsync = createAsyncThunk(
   "person/getPersonDetailsAsync",
-  async (value, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await getAllPersonDetail(value, token);
+      return await getAllPersonDetail(token);
     } catch (error) {
       const message =
         (error.response &&
@@ -78,10 +78,10 @@ export const getSearchDataAsync = createAsyncThunk(
 // Filter
 export const getFilterDataAsync = createAsyncThunk(
   "person/getFilterDataAsync",
-  async (value, thunkAPI) => {
+  async ({ filter, sort }, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await getFilterData(value, token);
+      return await getFilterData({ filter, sort }, token);
     } catch (error) {
       const message =
         (error.response &&

@@ -67,6 +67,7 @@ export const authSlice = createSlice({
     },
     [registerUserAsync.rejected]: (state, action) => {
       state.isError = true;
+      state.isLoading = false;
     },
     [loginUserAsync.pending]: (state, action) => {
       state.isLoading = true;
@@ -78,6 +79,7 @@ export const authSlice = createSlice({
     },
     [loginUserAsync.rejected]: (state, action) => {
       state.isError = true;
+      state.isLoading = false;
     },
     [logoutUserAsync.pending]: (state, action) => {
       state.isLoading = true;

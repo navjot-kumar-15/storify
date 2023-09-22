@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { loginUserAsync } from "../features/auth/authSlice";
 import Navbar from "../components/Navbar";
+import LoginLoader from "../components/LoginLoader";
+import { toast } from "react-toastify";
+
 const Login = () => {
   const {
     register,
@@ -11,11 +14,13 @@ const Login = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const { user } = useSelector((state) => state.auth);
+  const { user, isLoading, isError } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
   if (user) {
     return <Navigate to="/" />;
   }
+
   return (
     <>
       <Navbar>
@@ -40,7 +45,11 @@ const Login = () => {
                 <form
                   className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
                   onSubmit={handleSubmit((data) => {
-                    dispatch(loginUserAsync(data));
+                    if (isError) {
+                      toast("Invalid Credentials");
+                    } else {
+                      dispatch(loginUserAsync(data));
+                    }
                   })}
                 >
                   <div className="mb-4">
@@ -92,7 +101,7 @@ const Login = () => {
                       className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                       type="submit"
                     >
-                      Sign in
+                      {isLoading ? <LoginLoader /> : "Sign in"}
                     </button>
                   </div>
                   <hr className="mb-6 border-t" />

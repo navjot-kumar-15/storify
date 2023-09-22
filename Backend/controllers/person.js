@@ -41,12 +41,17 @@ export const getSearchData = asyncHandler(async (req, res) => {
 });
 
 export const getFilterData = asyncHandler(async (req, res) => {
-  const data = await Person.find().where("gender").equals(req.query.gender);
+  let data = Person.find({ user: req.user.id });
 
-  res.send(data);
+  if (req.query.gender) {
+    data = data.where("gender").equals(req.query.gender);
+  }
+  if (req.query.sort) {
+    data = data.sort(req.query.sort);
+  }
+  const result = await data;
+  res.send(result);
 });
-
-export const getPersonDetailsQuery = asyncHandler(async (req, res) => {});
 
 // Update the persons details
 export const updatePersonDetails = asyncHandler(async (req, res) => {

@@ -74,8 +74,14 @@ const AddForm = () => {
                     className=" text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  
                    dark:focus:ring-primary-500 dark:focus:border-primary-500 border-2 border-gray-400"
                     placeholder="Type Phone number"
-                    {...register("phone")}
+                    {...register("phone", {
+                      required: "min 10 digit number required",
+                      maxLength: 10,
+                    })}
                   />
+                  {/* {errors.phone && (
+                    <p className="text-red-900">{errors.phone.message}</p>
+                  )} */}
                 </div>
                 <div className="sm:col-span-2">
                   <label

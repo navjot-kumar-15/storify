@@ -34,8 +34,8 @@ const PopUp = () => {
     <>
       <Navbar>
         <section className="bg-white ">
-          <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-            <h2 className="mb-4 text-xl font-bold text-gray-800">
+          <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16 shadow">
+            <h2 className="mb-4 text-3xl text-center font-bold text-gray-800">
               Update details
             </h2>
             <form

@@ -37,13 +37,27 @@ export const getSearchData = async (value, token) => {
 };
 
 // Filter
-export const getFilterData = async (value, token) => {
+export const getFilterData = async ({ filter, sort }, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const { data } = await axios.get(`${URL}/filter?gender=${value}`, config);
+
+  let queryString = "";
+  let sortString = "";
+
+  for (let key in filter) {
+    queryString += `${key}=${filter[key]}`;
+  }
+  for (let key in sort) {
+    sortString += `${key}=${sort[key]}`;
+  }
+
+  const { data } = await axios.get(
+    `${URL}/filter?${filter ? queryString : sortString}`,
+    config
+  );
   return data;
 };
 

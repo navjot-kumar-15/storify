@@ -1,9 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUserAsync } from "../features/auth/authSlice";
 import Navbar from "../components/Navbar";
+import LoginLoader from "../components/LoginLoader";
 
 const SignUp = () => {
   const {
@@ -13,6 +14,8 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   return (
     <>
       <Navbar>
@@ -37,6 +40,7 @@ const SignUp = () => {
                   className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
                   onSubmit={handleSubmit((data) => {
                     dispatch(registerUserAsync(data));
+                    navigate("/login");
                     console.log(data);
                   })}
                 >
@@ -141,7 +145,7 @@ const SignUp = () => {
                       className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                       type="submit"
                     >
-                      Register Account
+                      {isLoading ? <LoginLoader /> : "Register account"}
                     </button>
                   </div>
                   <hr className="mb-6 border-t" />

@@ -77,7 +77,7 @@ const Table = () => {
         <div
           className="flex gap-4 max-sm:justify-end scale-110 hover:scale-100 transition ease-in-out cursor-pointer"
           onClick={() => {
-            dispatch(getPersonDetailsAsync());
+            dispatch(getPersonDetailsAsync({}));
           }}
         >
           <span className="font-bold ">Refresh</span>

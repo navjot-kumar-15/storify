@@ -11,10 +11,6 @@ const SeachBox = () => {
     e.preventDefault();
     setSearch(e.target.value);
   };
-<<<<<<< HEAD
-=======
-
->>>>>>> 6c7e9246fa11effae3e90eeccc7e189766624c16
 
   useEffect(() => {
     dispatch(getPersonDetailsAsync({ search }));

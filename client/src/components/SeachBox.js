@@ -11,7 +11,7 @@ const SeachBox = () => {
     e.preventDefault();
     setData(e.target.value);
   };
-  console.log(data);
+
 
   useEffect(() => {
     dispatch(getPersonDetailsAsync(data));

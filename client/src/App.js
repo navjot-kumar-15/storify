@@ -1,19 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Login from "./pages/Login";
-import Table from "./pages/Table";
 import Home from "./pages/Home";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Link,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import Protect from "./features/auth/Protect";
-import { useDispatch } from "react-redux";
-import { getPersonDetailsAsync } from "./features/person/personSlice";
 import PopUp from "./components/PopUp";
 import AddForm from "./components/AddForm";
 
@@ -54,10 +46,6 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getPersonDetailsAsync());
-  }, []);
   return (
     <>
       <RouterProvider router={router} />

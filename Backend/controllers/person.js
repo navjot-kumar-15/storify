@@ -22,10 +22,10 @@ export const createPersonDetail = asyncHandler(async (req, res) => {
 
 // Get the persons details
 export const getPersonDetails = asyncHandler(async (req, res) => {
-  const { q } = req.query;
   const person = await Person.find({ user: req.user.id });
-
-  res.send(person);
+  if (person) {
+    res.send(person);
+  }
 });
 
 export const getSearchData = asyncHandler(async (req, res) => {
@@ -70,13 +70,15 @@ export const updatePersonDetails = asyncHandler(async (req, res) => {
     throw new Error("User not authorized");
   }
 
-  const updatedPerson = await Person.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    {
-      new: true,
-    }
-  );
+  if (person) {
+    const updatedPerson = await Person.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+  }
 
   res.status(201).json(updatedPerson);
 });

@@ -32,6 +32,10 @@ const Table = () => {
     dispatch(getFilterDataAsync({ filter, sort }));
   }, [dataValue, sort]);
 
+  useEffect(() => {
+    dispatch(getPersonDetailsAsync());
+  }, []);
+
   return (
     <>
       <h1 className="text-4xl font-bold text-center mb-8 mt-5">Details</h1>

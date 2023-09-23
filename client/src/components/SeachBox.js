@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getSearchDataAsync } from "../features/person/personSlice";
 
 const SeachBox = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const { persons } = useSelector((state) => state.person);
   const [data, setData] = useState("");
   const handleSearch = (e) => {
     e.preventDefault();
@@ -11,8 +13,14 @@ const SeachBox = () => {
     // dispatch(getSearchDataAsync(data));
   };
 
+  const getSearchData = () => {
+    if (persons.user === user._id) {
+      dispatch(getSearchDataAsync(data));
+    }
+  };
+
   useEffect(() => {
-    dispatch(getSearchDataAsync(data));
+    getSearchData();
   }, [data]);
 
   return (

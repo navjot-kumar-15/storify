@@ -39,10 +39,10 @@ export const createPersonDetailsAsync = createAsyncThunk(
 // Get
 export const getPersonDetailsAsync = createAsyncThunk(
   "person/getPersonDetailsAsync",
-  async (value, thunkAPI) => {
+  async ({ search, sort }, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await getAllPersonDetail(value, token);
+      return await getAllPersonDetail({ search, sort }, token);
     } catch (error) {
       const message =
         (error.response &&

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import PopUp from "../components/PopUp";
 import { Link } from "react-router-dom";
 import {
   deletePersonDetailsAsync,
@@ -24,18 +22,18 @@ const Table = () => {
   };
   const handleSort = (e) => {
     e.preventDefault();
-    setSort({ sort: e.target.value });
+    setSort(e.target.value);
   };
 
   useEffect(() => {
     const filter = { gender: dataValue };
 
-    dispatch(getFilterDataAsync({ filter, sort }));
-  }, [dataValue, sort]);
+    dispatch(getFilterDataAsync({ filter }));
+  }, [dataValue]);
 
   useEffect(() => {
-    dispatch(getPersonDetailsAsync());
-  }, []);
+    dispatch(getPersonDetailsAsync({ sort }));
+  }, [sort]);
 
   return (
     <>
@@ -51,7 +49,7 @@ const Table = () => {
             Add Details
           </Link>
         </div>
-        {/* <div className="flex gap-2  align-middle">
+        <div className="flex gap-2  align-middle">
           <select
             name=""
             id=""
@@ -62,7 +60,7 @@ const Table = () => {
             <option value="name">A to Z</option>
             <option value="-name">Z to A</option>
           </select>
-        </div> */}
+        </div>
         <div className="flex gap-2  align-middle">
           <select
             name=""

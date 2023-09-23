@@ -16,17 +16,17 @@ export const createPersonDetail = async (value, token) => {
 };
 
 // Get all
-export const getAllPersonDetail = async (value, token) => {
+export const getAllPersonDetail = async ({ search, sort }, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  if (value) {
-    const { data } = await axios.get(`${URL}?q=${value}`, config);
+  if (search) {
+    const { data } = await axios.get(`${URL}?q=${search}`, config);
     return data;
   } else {
-    const { data } = await axios.get(`${URL}?q=`, config);
+    const { data } = await axios.get(`${URL}?q=&sort=${sort}`, config);
     return data;
   }
 };

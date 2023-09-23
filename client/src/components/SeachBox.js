@@ -6,16 +6,15 @@ const SeachBox = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { persons } = useSelector((state) => state.person);
-  const [data, setData] = useState("");
+  const [search, setSearch] = useState("");
   const handleSearch = (e) => {
     e.preventDefault();
-    setData(e.target.value);
+    setSearch(e.target.value);
   };
-  console.log(data);
 
   useEffect(() => {
-    dispatch(getPersonDetailsAsync(data));
-  }, [data]);
+    dispatch(getPersonDetailsAsync({ search }));
+  }, [search]);
 
   return (
     <>
@@ -25,12 +24,12 @@ const SeachBox = () => {
           id="username"
           type="text"
           placeholder="Search..."
-          value={data}
+          value={search}
           onChange={(e) => handleSearch(e)}
         />
         <div
           className="absolute right-0 inset-y-0 flex items-center"
-          onClick={() => setData("")}
+          onClick={() => setSearch("")}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

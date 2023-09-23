@@ -23,6 +23,7 @@ export const createPersonDetail = asyncHandler(async (req, res) => {
 // Get the persons details
 export const getPersonDetails = asyncHandler(async (req, res) => {
   const { q } = req.query;
+  const { sort } = req.query;
   const person = await Person.find({
     user: req.user.id,
     $or: [
@@ -30,7 +31,7 @@ export const getPersonDetails = asyncHandler(async (req, res) => {
       { email: { $regex: q } },
       { gender: { $regex: q } },
     ],
-  });
+  }).sort(sort);
 
   res.send(person);
 });

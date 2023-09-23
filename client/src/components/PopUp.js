@@ -104,7 +104,7 @@ const PopUp = () => {
                     Gender
                   </label>
                   <select
-                    className="p-2 bg-slate-400 text-white"
+                    className="p-2 bg-slate-200 text-black"
                     {...register("gender")}
                   >
                     <option value="">Choose Gender</option>
@@ -124,7 +124,7 @@ const PopUp = () => {
                 <Link
                   to="/"
                   type="button"
-                  className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-green-400 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+                  className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-green-600 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
                 >
                   Back
                 </Link>

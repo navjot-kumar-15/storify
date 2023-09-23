@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSearchDataAsync } from "../features/person/personSlice";
+import { getPersonDetailsAsync } from "../features/person/personSlice";
 
 const SeachBox = () => {
   const dispatch = useDispatch();
@@ -10,17 +10,11 @@ const SeachBox = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     setData(e.target.value);
-    // dispatch(getSearchDataAsync(data));
   };
-
-  const getSearchData = () => {
-    if (persons.user === user._id) {
-      dispatch(getSearchDataAsync(data));
-    }
-  };
+  console.log(data);
 
   useEffect(() => {
-    getSearchData();
+    dispatch(getPersonDetailsAsync(data));
   }, [data]);
 
   return (

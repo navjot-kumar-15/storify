@@ -22,10 +22,17 @@ export const createPersonDetail = asyncHandler(async (req, res) => {
 
 // Get the persons details
 export const getPersonDetails = asyncHandler(async (req, res) => {
-  const person = await Person.find({ user: req.user.id });
-  if (person) {
-    res.send(person);
-  }
+  const { q } = req.query;
+  const person = await Person.find({
+    user: req.user.id,
+    $or: [
+      { name: { $regex: q } },
+      { email: { $regex: q } },
+      { gender: { $regex: q } },
+    ],
+  });
+
+  res.send(person);
 });
 
 export const getSearchData = asyncHandler(async (req, res) => {

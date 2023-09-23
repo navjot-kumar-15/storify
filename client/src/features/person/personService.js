@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const URL = "https://storify-five.vercel.app/person";
+// const URL = "http://localhost:8080/person";
 
 // Create
 export const createPersonDetail = async (value, token) => {
@@ -15,26 +16,31 @@ export const createPersonDetail = async (value, token) => {
 };
 
 // Get all
-export const getAllPersonDetail = async (token) => {
+export const getAllPersonDetail = async (value, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const { data } = await axios.get(`${URL}`, config);
-  return data;
+  if (value) {
+    const { data } = await axios.get(`${URL}?q=${value}`, config);
+    return data;
+  } else {
+    const { data } = await axios.get(`${URL}?q=`, config);
+    return data;
+  }
 };
 
 // Search
-export const getSearchData = async (value, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const { data } = await axios.get(`${URL}/search?q=${value}`, config);
-  return data;
-};
+// export const getSearchData = async (value, token) => {
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   };
+//   const { data } = await axios.get(`${URL}/search?q=${value}`, config);
+//   return data;
+// };
 
 // Filter
 export const getFilterData = async ({ filter, sort }, token) => {

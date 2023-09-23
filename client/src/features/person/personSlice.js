@@ -10,6 +10,7 @@ import {
 
 const initialState = {
   persons: [],
+  filtersData: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -38,10 +39,10 @@ export const createPersonDetailsAsync = createAsyncThunk(
 // Get
 export const getPersonDetailsAsync = createAsyncThunk(
   "person/getPersonDetailsAsync",
-  async (_, thunkAPI) => {
+  async (value, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await getAllPersonDetail(token);
+      return await getAllPersonDetail(value, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -56,24 +57,24 @@ export const getPersonDetailsAsync = createAsyncThunk(
 );
 
 // Search
-export const getSearchDataAsync = createAsyncThunk(
-  "person/getSearchDataAsync",
-  async (value, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await getSearchData(value, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+// export const getSearchDataAsync = createAsyncThunk(
+//   "person/getSearchDataAsync",
+//   async (value, thunkAPI) => {
+//     try {
+//       const token = thunkAPI.getState().auth.user.token;
+//       return await getSearchData(value, token);
+//     } catch (error) {
+//       const message =
+//         (error.response &&
+//           error.response.data &&
+//           error.response.data.message) ||
+//         error.message ||
+//         error.toString();
 
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
+//       return thunkAPI.rejectWithValue(message);
+//     }
+//   }
+// );
 
 // Filter
 export const getFilterDataAsync = createAsyncThunk(
@@ -159,17 +160,6 @@ export const personSlice = createSlice({
       state.isSuccess = true;
     },
     [getPersonDetailsAsync.rejected]: (state, action) => {
-      state.isError = true;
-    },
-    [getSearchDataAsync.pending]: (state, action) => {
-      state.isLoading = true;
-    },
-    [getSearchDataAsync.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.persons = action.payload;
-      state.isSuccess = true;
-    },
-    [getSearchDataAsync.rejected]: (state, action) => {
       state.isError = true;
     },
     [getFilterDataAsync.pending]: (state, action) => {

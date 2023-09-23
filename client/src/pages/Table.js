@@ -13,6 +13,7 @@ import Loader from "../components/Loader";
 
 const Table = () => {
   const { persons, isLoading } = useSelector((state) => state.person);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [dataValue, setDataValue] = useState();
   const [sort, setSort] = useState();
@@ -122,7 +123,7 @@ const Table = () => {
                 <tbody>
                   {persons?.map((person) => (
                     <tr className="" key={person._id}>
-                      <td className=" border px-4 py-2 text-center max-w-[100px] max-sm:min-w-[130px]">
+                      <td className=" border px-4 py-2 text-center max-w-[100px] max-sm:min-w-[180px] ">
                         {person.name}
                       </td>
                       <td className=" border px-4 py-2 text-center max-md:overflow-x-scroll max-w-[120px] max-sm:min-w-[180px]">

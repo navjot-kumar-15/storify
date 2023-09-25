@@ -16,31 +16,32 @@ export const createPersonDetail = async (value, token) => {
 };
 
 // Get all
-export const getAllPersonDetail = async ({ search, sort }, token) => {
+export const getAllPersonDetail = async (
+  { search, sort, pagination },
+  token
+) => {
+  let queryString = "";
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
+
+  for (let key in pagination) {
+    queryString += `${key}=${pagination[key]}&`;
+  }
+
   if (search) {
     const { data } = await axios.get(`${URL}?q=${search}`, config);
     return data;
   } else {
-    const { data } = await axios.get(`${URL}?q=&sort=${sort}`, config);
+    const { data } = await axios.get(
+      `${URL}?q=&sort=${sort}&${queryString}`,
+      config
+    );
     return data;
   }
 };
-
-// Search
-// export const getSearchData = async (value, token) => {
-//   const config = {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   };
-//   const { data } = await axios.get(`${URL}/search?q=${value}`, config);
-//   return data;
-// };
 
 // Filter
 export const getFilterData = async ({ filter, sort }, token) => {

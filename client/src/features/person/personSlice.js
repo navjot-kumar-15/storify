@@ -10,6 +10,7 @@ import {
 
 const initialState = {
   persons: [],
+  totalPages: 0,
   filtersData: [],
   isError: false,
   isLoading: false,
@@ -39,10 +40,10 @@ export const createPersonDetailsAsync = createAsyncThunk(
 // Get
 export const getPersonDetailsAsync = createAsyncThunk(
   "person/getPersonDetailsAsync",
-  async ({ search, sort }, thunkAPI) => {
+  async ({ search, sort, pagination }, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await getAllPersonDetail({ search, sort }, token);
+      return await getAllPersonDetail({ search, sort, pagination }, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -55,26 +56,6 @@ export const getPersonDetailsAsync = createAsyncThunk(
     }
   }
 );
-
-// Search
-// export const getSearchDataAsync = createAsyncThunk(
-//   "person/getSearchDataAsync",
-//   async (value, thunkAPI) => {
-//     try {
-//       const token = thunkAPI.getState().auth.user.token;
-//       return await getSearchData(value, token);
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString();
-
-//       return thunkAPI.rejectWithValue(message);
-//     }
-//   }
-// );
 
 // Filter
 export const getFilterDataAsync = createAsyncThunk(
@@ -156,7 +137,8 @@ export const personSlice = createSlice({
     },
     [getPersonDetailsAsync.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.persons = action.payload;
+      state.persons = action.payload.personsDetails;
+      state.totalPages = action.payload.totalPages;
       state.isSuccess = true;
     },
     [getPersonDetailsAsync.rejected]: (state, action) => {

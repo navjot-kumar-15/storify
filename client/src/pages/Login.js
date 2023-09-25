@@ -106,12 +106,12 @@ const Login = () => {
                   </div>
                   <hr className="mb-6 border-t" />
                   <div className="text-center">
-                    <a
+                    <Link
                       className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                      href="#"
+                      to="/forgot"
                     >
                       Forgot Password?
-                    </a>
+                    </Link>
                   </div>
                   <div className="text-center">
                     <Link

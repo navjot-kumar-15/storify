@@ -43,6 +43,9 @@ const AddForm = () => {
                     placeholder="Type your name"
                     {...register("name")}
                   />
+                  {errors.name && (
+                    <p className="text-red-900">{errors.name.message}</p>
+                  )}
                 </div>
                 <div className="sm:col-span-2">
                   <label
@@ -59,6 +62,9 @@ const AddForm = () => {
                     placeholder="Type your email"
                     {...register("email")}
                   />
+                  {errors.email && (
+                    <p className="text-red-900">{errors.email.message}</p>
+                  )}
                 </div>
 
                 <div className="sm:col-span-2">
@@ -77,11 +83,12 @@ const AddForm = () => {
                     {...register("phone", {
                       required: "min 10 digit number required",
                       maxLength: 10,
+                      minLength: 10,
                     })}
                   />
-                  {/* {errors.phone && (
+                  {errors.phone && (
                     <p className="text-red-900">{errors.phone.message}</p>
-                  )} */}
+                  )}
                 </div>
                 <div className="sm:col-span-2">
                   <label
@@ -99,6 +106,9 @@ const AddForm = () => {
                     <option value="female">Female</option>
                     <option value="others">Other's</option>
                   </select>
+                  {errors.gender && (
+                    <p className="text-red-900">{errors.gender.message}</p>
+                  )}
                 </div>
               </div>
               <div className="flex gap-3 max-sm:flex-col ">

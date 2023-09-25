@@ -18,6 +18,13 @@ export const loginUser = async (value) => {
   }
   return data;
 };
+export const resetPassword = async ({ recipient_email, OTP }) => {
+  const { data } = await axios.post(`${URL}/send_recovery_email`, {
+    recipient_email,
+    OTP,
+  });
+  return data;
+};
 export const logoutUser = async () => {
   await localStorage.removeItem("user");
 };

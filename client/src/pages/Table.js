@@ -8,13 +8,20 @@ import {
 } from "../features/person/personSlice";
 import SeachBox from "../components/SeachBox";
 import Loader from "../components/Loader";
+import Pagination from "../components/Pagination";
 
 const Table = () => {
-  const { persons, isLoading } = useSelector((state) => state.person);
-  const { user } = useSelector((state) => state.auth);
+  const { persons, isLoading, totalPages } = useSelector(
+    (state) => state.person
+  );
   const dispatch = useDispatch();
   const [dataValue, setDataValue] = useState();
   const [sort, setSort] = useState();
+  const [page, setPage] = useState(1);
+
+  const handlePage = (page) => {
+    setPage(page);
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -24,16 +31,17 @@ const Table = () => {
     e.preventDefault();
     setSort(e.target.value);
   };
+  console.log(page);
 
   useEffect(() => {
     const filter = { gender: dataValue };
-
     dispatch(getFilterDataAsync({ filter }));
   }, [dataValue]);
 
   useEffect(() => {
-    dispatch(getPersonDetailsAsync({ sort }));
-  }, [sort]);
+    const pagination = { page, limit: 5 };
+    dispatch(getPersonDetailsAsync({ sort, pagination }));
+  }, [sort, page]);
 
   return (
     <>
@@ -87,7 +95,7 @@ const Table = () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="w-6 h-6 hover:start-1 scale-3"
+            className="w-6 h-6 hover:start-1  scale-3"
           >
             <path
               stroke-linecap="round"
@@ -189,6 +197,12 @@ const Table = () => {
               )}
             </form>
           </div>
+          <Pagination
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
+            handlePage={handlePage}
+          />
         </>
       )}
     </>

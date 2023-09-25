@@ -1,6 +1,39 @@
 import Person from "../model/person.js";
 import asyncHandler from "express-async-handler";
 
+function paginatedResults(model) {
+  return async (req, res, next) => {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const results = {};
+
+    if (endIndex < (await model.countDocuments().exec())) {
+      results.next = {
+        page: page + 1,
+        limit: limit,
+      };
+    }
+
+    if (startIndex > 0) {
+      results.previous = {
+        page: page - 1,
+        limit: limit,
+      };
+    }
+    try {
+      results.results = await model.find().limit(limit).skip(startIndex).exec();
+      res.paginatedResults = results;
+      next();
+    } catch (e) {
+      res.status(500).json({ message: e.message });
+    }
+  };
+}
+
 // Create the person data
 export const createPersonDetail = asyncHandler(async (req, res) => {
   const person = await Person(req.body);
@@ -24,28 +57,27 @@ export const createPersonDetail = asyncHandler(async (req, res) => {
 export const getPersonDetails = asyncHandler(async (req, res) => {
   const { q } = req.query;
   const { sort } = req.query;
-  const person = await Person.find({
+  const { limit } = req.query;
+  const { page } = req.query;
+  const personsDetails = await Person.find({
     user: req.user.id,
     $or: [
       { name: { $regex: q } },
       { email: { $regex: q } },
       { gender: { $regex: q } },
     ],
-  }).sort(sort);
+  })
+    .sort(sort)
+    .limit(limit * 1)
+    .skip((page - 1) * limit);
 
-  res.send(person);
-});
+  const count = await Person.find({ user: req.user.id }).countDocuments();
 
-export const getSearchData = asyncHandler(async (req, res) => {
-  const { q } = req.query;
-  const data = await Person.find({
-    $or: [
-      { name: { $regex: q } },
-      { email: { $regex: q } },
-      { gender: { $regex: q } },
-    ],
+  res.json({
+    personsDetails,
+    totalPages: Math.ceil(count / limit),
+    currentPage: page,
   });
-  res.send(data);
 });
 
 export const getFilterData = asyncHandler(async (req, res) => {

@@ -8,12 +8,27 @@ import SignUp from "./pages/SignUp";
 import Protect from "./features/auth/Protect";
 import PopUp from "./components/PopUp";
 import AddForm from "./components/AddForm";
+import ResetPassword from "./components/ResetPassword";
+import VerficationOTP from "./components/VerficationOTP";
+import NewPassword from "./components/NewPassword";
 
 const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
   },
+  // {
+  //   path: "/forgot",
+  //   element: <ResetPassword />,
+  // },
+  // {
+  //   path: "/verify",
+  //   element: <VerficationOTP />,
+  // },
+  // {
+  //   path: "/newpassword",
+  //   element: <NewPassword />,
+  // },
   {
     path: "/register",
     element: <SignUp />,
